@@ -1,5 +1,5 @@
 # vonote
- The Simplier Way of Splash Screen
+ The Simplier Way of Taking Note
 Hi!!
 
 Let's talk about project.
