@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>We need permission for your voice recognition</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need permission for your voice</string>
 </dict>
 </plist>

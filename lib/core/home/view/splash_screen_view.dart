@@ -52,7 +52,7 @@ class CustomSplashScreenAndFlowBuilder extends StatelessWidget {
           (AppBloc bloc) => bloc.state.status,
         ),
         onGeneratePages: (AppStatus state, List<Page<dynamic>> pages) {
-          return OnGenerateViews(state, pages);
+          return onGenerateViews(state, pages);
         },
       ),
       durationInSeconds: 5,

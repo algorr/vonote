@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vonote/app/viewmodel/app/app_bloc.dart';
 import 'package:vonote/core/data/repositories/auth_repository.dart';
-import 'package:vonote/core/home/view/splash_screen_view.dart';
 import 'app/bloc_observer.dart';
+import 'app/routes/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,13 +29,13 @@ class MyApp extends StatelessWidget {
       value: _authRepository,
       child: BlocProvider(
           create: (_) => AppBloc(authRepository: _authRepository),
-          child: const SplashScreenView()),
+          child: const App()),
     );
   }
 }
 
 
-/*
+
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
@@ -47,8 +48,7 @@ class App extends StatelessWidget {
           ),
           home:  FlowBuilder<AppStatus>(
             state: context.select((AppBloc bloc) => bloc.state.status),
-            onGeneratePages: OnGenerateViews,),
+            onGeneratePages: onGenerateViews,),
         );
   }
 }
-*/
