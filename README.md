@@ -6,6 +6,7 @@ Let's talk about project.
 
 # Architecture
 Bloc Design Pattern
+MVVM
 
 # Backend Service
 Google Firebase & Firestore
