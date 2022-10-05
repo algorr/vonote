@@ -57,6 +57,10 @@ dependencies:
   # swipe for pages
   liquid_swipe: ^3.0.0
   flow_builder: ^0.0.9
+
+
+  # note bubbles
+  bubble: ^1.2.1
   
 
 dev_dependencies:

@@ -1,3 +1,4 @@
+import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -15,7 +16,7 @@ class SpeechToTextView extends StatefulWidget {
 }
 
 class _SpeechToTextViewState extends State<SpeechToTextView> {
-  SpeechToText _speechToText = SpeechToText();
+  final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
 
@@ -60,8 +61,8 @@ class _SpeechToTextViewState extends State<SpeechToTextView> {
       create: (context) => AuthCubit(context.read<AuthRepository>()),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Speech To Text'),
-           actions: [
+          title: const Text('Speech To Text'),
+          actions: [
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 return IconButton(
@@ -84,27 +85,36 @@ class _SpeechToTextViewState extends State<SpeechToTextView> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(16),
-              child: const Text(
-                'Recognized words:',
-                style: TextStyle(fontSize: 20.0),
+            Center(
+              child: Container(
+                padding: const EdgeInsets.only(top: 10),
+                child: const Text(
+                  'Notes',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  // If listening is active show the recognized words
-                  _speechToText.isListening
-                      ? _lastWords
-                      // If listening isn't active but could be tell the user
-                      // how to start it, otherwise indicate that speech
-                      // recognition is not yet ready or not supported on
-                      // the target device
-                      : _speechEnabled
-                          ? 'Tap the microphone to start listening...'
-                          : 'Speech not available',
+                padding: const EdgeInsets.all(16),
+                child: Bubble(
+                  alignment: Alignment.topRight,
+                  color: Colors.yellow,
+                  stick: true,
+                  nip: BubbleNip.rightTop,
+                 nipHeight: 10,
+                  child: Text(
+                    // If listening is active show the recognized words
+                    _speechToText.isListening
+                        ? _lastWords
+                        // If listening isn't active but could be tell the user
+                        // how to start it, otherwise indicate that speech
+                        // recognition is not yet ready or not supported on
+                        // the target device
+                        : _speechEnabled
+                            ? 'Tap the microphone to start listening...'
+                            : 'Speech not available',
+                  ),
                 ),
               ),
             ),
