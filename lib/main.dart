@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vonote/app/viewmodel/app/app_bloc.dart';
 import 'package:vonote/core/data/repositories/auth_repository.dart';
+import 'package:vonote/core/data/repositories/speech_repository.dart';
+import 'package:vonote/core/home/viewmodel/auth/auth_cubit.dart';
+import 'package:vonote/core/home/viewmodel/speech/cubit/speech_cubit.dart';
 import 'app/bloc_observer.dart';
 import 'app/routes/routes.dart';
 
@@ -27,14 +30,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authRepository,
-      child: BlocProvider(
-          create: (_) => AppBloc(authRepository: _authRepository),
-          child: const App()),
+      child: const AppMultiBlocProvider(),
     );
   }
 }
 
+class AppMultiBlocProvider extends StatelessWidget {
+  const AppMultiBlocProvider({
+    Key? key,
+  }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+      BlocProvider(create: (context)=> AppBloc(authRepository: context.read<AuthRepository>())),
+      BlocProvider(
+          create: ((context) => AuthCubit(context.read<AuthRepository>()))),
+      BlocProvider(
+          create: ((context) =>
+              SpeechCubit(context.read<SpeechRepository>()))),
+    ], child: const App());
+  }
+}
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -42,13 +60,25 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-          title: 'My Project',
-          theme: ThemeData(
-            primarySwatch: Colors.red,
-          ),
-          home:  FlowBuilder<AppStatus>(
-            state: context.select((AppBloc bloc) => bloc.state.status),
-            onGeneratePages: onGenerateViews,),
-        );
+      title: 'My Project',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: const AppFlowBuilder(),
+    );
+  }
+}
+
+class AppFlowBuilder extends StatelessWidget {
+  const AppFlowBuilder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlowBuilder<AppStatus>(
+      state: context.select((AppBloc bloc) => bloc.state.status),
+      onGeneratePages: onGenerateViews,
+    );
   }
 }

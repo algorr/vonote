@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vonote/app/viewmodel/app/app_bloc.dart';
 import 'package:vonote/core/home/view/authentication_view.dart';
-import 'package:vonote/core/home/view/home_view.dart';
 import 'package:vonote/core/home/view/speech_to_text_view.dart';
 
 

@@ -15,51 +15,53 @@ class AuthenticationView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Authentication View'),
       ),
-      body: SafeArea(
-        child: BlocProvider(
-          create: (context) => AuthCubit(context.read<AuthRepository>()),
-          child: BlocListener<AuthCubit, AuthState>(
-            listener: (context, state) {
-              if (state.status == AuthStatus.error) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Error'),
-                  duration: Duration(seconds: 2),
-                ));
-              }
-            },
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: size.height * .1),
-                  child: const Center(
-                    child: Text(
-                      AuthViewConsts.title,
-                      style: AuthViewConsts.titleTextStyle,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: BlocProvider(
+            create: (context) => AuthCubit(context.read<AuthRepository>()),
+            child: BlocListener<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state.status == AuthStatus.error) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Error'),
+                    duration: Duration(seconds: 2),
+                  ));
+                }
+              },
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: size.height * .1),
+                    child: const Center(
+                      child: Text(
+                        AuthViewConsts.title,
+                        style: AuthViewConsts.titleTextStyle,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: size.width * .1,
-                      right: size.width * .1,
-                      top: size.height * .1),
-                  child: const Center(
-                    child: _EmailInputWidget(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: size.width * .1,
+                        right: size.width * .1,
+                        top: size.height * .1),
+                    child: const Center(
+                      child: _EmailInputWidget(),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .02,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: size.width * .1, right: size.width * .1),
-                  child: const Center(
-                    child: _PasswordInputWidget(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .02,
                   ),
-                ),
-                _LoginButtonWidget(size: size),
-                _SignUpButtonWidget(size: size)
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: size.width * .1, right: size.width * .1),
+                    child: const Center(
+                      child: _PasswordInputWidget(),
+                    ),
+                  ),
+                  _LoginButtonWidget(size: size),
+                  _SignUpButtonWidget(size: size)
+                ],
+              ),
             ),
           ),
         ),

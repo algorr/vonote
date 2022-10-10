@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:vonote/core/data/model/user_model.dart';
 
 class AuthRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
-
   AuthRepository({firebase_auth.FirebaseAuth? firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
@@ -19,8 +19,19 @@ class AuthRepository {
 
   Future<void> signUp({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_firebaseAuth.currentUser?.uid)
+            .collection('notes')
+            .add({
+          "email": _firebaseAuth.currentUser?.email,
+          "photoUrl": _firebaseAuth.currentUser?.photoURL,
+          "id": _firebaseAuth.currentUser?.uid,
+        });
+      });
     } catch (_) {}
   }
 

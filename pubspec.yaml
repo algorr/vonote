@@ -48,6 +48,9 @@ dependencies:
   firebase_core: ^1.23.0
   cloud_firestore: ^3.4.9
 
+  # page navigation
+  flow_builder: ^0.0.9
+
   # recognize speech
   speech_to_text: ^6.0.0
 
@@ -56,11 +59,12 @@ dependencies:
 
   # swipe for pages
   liquid_swipe: ^3.0.0
-  flow_builder: ^0.0.9
+
 
 
   # note bubbles
   bubble: ^1.2.1
+  avatar_glow: ^2.0.2
   
 
 dev_dependencies:
